@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased
+
+- Read peer titles through `ctx.get('sessions')`. A property read of an undeclared service throws, which skipped the fallback and left every reminder pointing at a bare session id.
+- Widen `session_status` to eight records so a busy session still shows a last assistant message instead of an empty page.
+- Resolve the model router through `ctx.get('llm')` in the create pre-flight; `ctx.llm` throws without `inject`.
+
 ## 0.1.0
 
 - Four tools: `session_open`, `session_send`, `session_wait`, `session_status`.
