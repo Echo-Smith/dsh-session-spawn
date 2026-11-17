@@ -10,6 +10,15 @@
 | `session_wait` | 等它空闲或需要输入，然后返回最后一条助手消息。超时只报"仍在运行"，可以重复调用。 |
 | `session_status` | 非阻塞读取：是否运行、排队轮数、待处理输入、最后一条助手消息。 |
 
+## 安装
+
+在 Plugins → Add plugin 里填入下面任一来源，或执行 `dsh plugin add <来源>`：
+
+- npm：`dsh-session-spawn`
+- GitHub：`github:Echo-Smith/dsh-session-spawn`
+
+两者需要 DSH 0.2.x；插件没有运行时依赖。
+
 ## 继承什么
 
 - **项目**。新会话加入开启它的会话所在的工作区；只能在同一个项目内派活，跨项目会被拒绝。
@@ -37,6 +46,15 @@ like any other conversation and the user can take them over at any time.
 | `session_send` | Dispatches another task to an existing sibling. `queue` (default) waits for the current turn, `steer` interrupts the current step. |
 | `session_wait` | Waits for a sibling to become idle or to need input, then returns its last assistant message. A timeout reports "still running" and is safe to repeat. |
 | `session_status` | Non-blocking read: running, queued turns, pending input, last assistant message. |
+
+## Install
+
+Add either source in Plugins → Add plugin, or run `dsh plugin add <source>`:
+
+- npm: `dsh-session-spawn`
+- GitHub: `github:Echo-Smith/dsh-session-spawn`
+
+Either needs DSH 0.2.x; the plugin has no runtime dependencies.
 
 ## What it inherits
 
