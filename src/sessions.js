@@ -174,14 +174,21 @@ export async function createPeer(ctx, options = {}) {
   // untitled, undispatchable peer sitting in the user's sidebar.
   const selection = model === undefined ? currentModelOf(caller) : model
   if (selection !== undefined) {
+    // Reach the router through `ctx.get` only: this plugin does not inject
+    // `llm`, and a property read of an uncontributed service throws before the
+    // fallback runs. When the router is not reachable from this context the
+    // pre-flight is skipped; `agent.model.select` below still validates the
+    // route after creation and reports `model-apply` instead.
+    let llm
     try {
-      const llm = ctx?.llm ?? ctx?.get?.('llm')
-      if (llm === undefined || typeof llm.resolveCallConfig !== 'function') {
-        throw new Error('the model router is unavailable')
+      llm = ctx?.get?.('llm')
+    } catch {}
+    if (llm !== undefined && llm !== null && typeof llm.resolveCallConfig === 'function') {
+      try {
+        await llm.resolveCallConfig(selection)
+      } catch (error) {
+        return { sessionId: null, agent: null, error: { kind: 'model', message: messageOf(error) } }
       }
-      await llm.resolveCallConfig(selection)
-    } catch (error) {
-      return { sessionId: null, agent: null, error: { kind: 'model', message: messageOf(error) } }
     }
   }
 
