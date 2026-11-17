@@ -1,7 +1,6 @@
 {
   "name": "dsh-session-spawn",
   "version": "0.1.0",
-  "private": true,
   "type": "module",
   "description": "给 DSH 增加同级会话：在同一项目里开启另一个对话、向它派活并读取进度与审批状态。Peer sessions: open, dispatch to, and read the status of same-project conversations.",
   "exports": {
@@ -47,5 +46,8 @@
   "scripts": {
     "test": "node test/harness.mjs",
     "check": "node --check index.js && node --check src/sessions.js && node --check test/harness.mjs"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }
