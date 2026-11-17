@@ -1,0 +1,12 @@
+<svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect x="4.5" y="5" width="16" height="13" rx="3" fill="#7CB7FF" fill-opacity="0.55" />
+  <path d="M8.5 18 13 22 13 18Z" fill="#7CB7FF" fill-opacity="0.55" />
+  <rect x="15.5" y="14" width="16" height="13" rx="3" fill="url(#session-spawn-front)" />
+  <path d="M23 27 27.5 31 27.5 27Z" fill="url(#session-spawn-front)" />
+  <defs>
+    <linearGradient id="session-spawn-front" x1="16" y1="14" x2="31" y2="30" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#6FB2EE" />
+      <stop offset="1" stop-color="#3E58D6" />
+    </linearGradient>
+  </defs>
+</svg>

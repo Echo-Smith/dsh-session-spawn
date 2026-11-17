@@ -1,0 +1,6 @@
+{
+  "meta": {
+    "title": "Peer sessions",
+    "description": "Open another conversation in the same project, dispatch work to it, and read its progress and approval state."
+  }
+}

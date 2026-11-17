@@ -1,0 +1,6 @@
+# Host row: registers four global tools. No preset change is needed.
+- insert:
+    - id: session-spawn
+      name: 'dsh-session-spawn'
+      config:
+        maxOpenPerWorkspace: 8

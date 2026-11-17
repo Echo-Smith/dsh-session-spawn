@@ -1,0 +1,51 @@
+{
+  "name": "dsh-session-spawn",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "给 DSH 增加同级会话：在同一项目里开启另一个对话、向它派活并读取进度与审批状态。Peer sessions: open, dispatch to, and read the status of same-project conversations.",
+  "exports": {
+    ".": "./index.js",
+    "./locale/*.json": "./locale/*.json",
+    "./icon": "./icon.svg"
+  },
+  "files": [
+    "index.js",
+    "src",
+    "cordis.patch.yml",
+    "locale/*.json",
+    "icon.svg",
+    "README.md",
+    "CHANGELOG.md",
+    "LICENSE"
+  ],
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    }
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Echo-Smith/dsh-session-spawn.git"
+  },
+  "homepage": "https://github.com/Echo-Smith/dsh-session-spawn#readme",
+  "bugs": {
+    "url": "https://github.com/Echo-Smith/dsh-session-spawn/issues"
+  },
+  "keywords": [
+    "deepseek-harness",
+    "dsh",
+    "dsh-plugin",
+    "session",
+    "peer-session",
+    "multi-agent"
+  ],
+  "scripts": {
+    "test": "node test/harness.mjs",
+    "check": "node --check index.js && node --check src/sessions.js && node --check test/harness.mjs"
+  }
+}
