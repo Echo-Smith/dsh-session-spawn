@@ -71,10 +71,17 @@ export function peersIn(workspace, archivedIds = []) {
  */
 export function describe(ctx, sessionId) {
   const requested = typeof sessionId === 'string' ? sessionId : ''
+  // `ctx.get` first: reading an uncontributed service property can throw, and a
+  // throw in the first operand would skip the fallback that does work.
   let session
   try {
-    session = ctx?.sessions?.get?.(requested) ?? ctx?.get?.('sessions')?.get?.(requested)
+    session = ctx?.get?.('sessions')?.get?.(requested)
   } catch {}
+  if (session === undefined) {
+    try {
+      session = ctx?.sessions?.get?.(requested)
+    } catch {}
+  }
 
   let title = ''
   try {
@@ -83,14 +90,39 @@ export function describe(ctx, sessionId) {
     if (typeof record?.title === 'string') title = record.title.trim()
   } catch {}
 
+  // DSH may not have generated a title yet. Name the peer from its first user
+  // message so a "switch to that conversation" reminder still points somewhere
+  // the user can find in the sidebar.
+  let firstMessage = ''
+  if (title === '' && typeof session?.snapshotEvents === 'function') {
+    try {
+      for (const event of session.snapshotEvents()) {
+        if (event?.type !== 'user/message' || !Array.isArray(event?.data?.content)) continue
+        const text = event.data.content
+          .filter((block) => block?.type === 'text' && typeof block.text === 'string')
+          .map((block) => block.text)
+          .join(' ')
+          .replace(/\s+/g, ' ')
+          .trim()
+        if (text !== '') {
+          firstMessage = text.length > 48 ? `${text.slice(0, 48)}…` : text
+          break
+        }
+      }
+    } catch {}
+  }
+
   const resolvedId = typeof session?.header?.id === 'string' && session.header.id !== '' ? session.header.id : requested
   const pending = title === ''
   return {
     sessionId: resolvedId,
     shortId: shortIdOf(resolvedId),
     title: pending ? null : title,
+    firstMessage,
     pending,
-    label: pending ? `${shortIdOf(resolvedId)} (${TITLE_PENDING})` : JSON.stringify(title),
+    label: pending
+      ? (firstMessage === '' ? `${shortIdOf(resolvedId)} (${TITLE_PENDING})` : `${shortIdOf(resolvedId)} · ${firstMessage}`)
+      : JSON.stringify(title),
   }
 }
 

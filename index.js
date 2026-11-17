@@ -115,7 +115,7 @@ function statusLines(described, state) {
 }
 
 function textBlock(text) {
-  return text === '' ? 'Last assistant message: (none yet)' : `Last assistant message:\n${text}`
+  return text === '' ? 'Last assistant message: (none in the recent records)' : `Last assistant message:\n${text}`
 }
 
 function workingDirectoryOf(ctx, caller) {
@@ -431,7 +431,7 @@ function createDefinitions(ctx, settings) {
         try {
           const page = await ctx.sessionController.events({
             address: { kind: 'session', sessionId: targetId },
-            maxMessages: 3,
+            maxMessages: 8,
           }, exec.signal)
           if (Array.isArray(page?.records)) records = page.records
         } catch {}

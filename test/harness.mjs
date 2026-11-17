@@ -571,7 +571,7 @@ await check('session_status is read-only, works across projects, and reports the
   assert.equal(world.prompts.length, promptsBefore, 'status dispatched nothing')
 
   const eventsCall = world.calls.filter((entry) => entry.method === 'events').at(-1)
-  assert.equal(eventsCall.request.maxMessages, 3)
+  assert.equal(eventsCall.request.maxMessages, 8)
   assert.deepEqual(eventsCall.request.address, { kind: 'session', sessionId: target.id })
 })
 
